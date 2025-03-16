@@ -53,3 +53,25 @@ html{
     font-size: 15px;
     color: red;
 }
+
+.work{
+    width: 300px;
+    height: 500px;
+    background-color: white;
+    color: black;
+    margin: 100px;
+    padding: 50px;
+    border: 3px solid gray;
+    font-size: 20px;
+    text-align: center;
+}
+
+.title-notes{
+    width: 240px;
+    height: 30px;
+    font-size: 35px;
+    border: none;
+    outline: none;
+    border-bottom: 2px solid black;
+    text-align: center;
+}

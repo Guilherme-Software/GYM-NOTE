@@ -23,9 +23,9 @@ def create_app(test_config=None):
     def home():
         return redirect(url_for('auth.login'))
 
-    @app.route("/note", methods=['GET'])
+    @app.route("/notes", methods=['GET'])
     def note():
-        return render_template("note.html")
+        return render_template("notes.html")
 
 
     from . import db
@@ -33,5 +33,9 @@ def create_app(test_config=None):
 
     from . import auth
     app.register_blueprint(auth.bp)
+
+    from . import notes
+    app.register_blueprint(notes.bp)
+    app.add_url_rule("/note", endpoint='notes')
 
     return app
