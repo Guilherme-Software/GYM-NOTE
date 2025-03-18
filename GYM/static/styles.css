@@ -75,3 +75,20 @@ html{
     border-bottom: 2px solid black;
     text-align: center;
 }
+
+.exercise{
+    margin: 10px;
+    margin-left: -150px;
+    width: 200px;
+    height: 20px;
+    font-size: 20px;
+    text-align: center;
+}
+
+.kg{
+    margin-right: -150px;
+    width: 100px;
+    height: 20px;
+    font-size: 20px;
+    text-align: center;
+}
