@@ -21,7 +21,7 @@
                     <h1>Register</h1>
                     <input type="text" placeholder="Name" name="nameform" class="my-input">
                     <input type="email" placeholder="E-mail" name="emailform" class="my-input">
-                    <input type="password" placeholder="Password" name="passwordform" class="my-input">
+                    <input type="password" placeholder="Password" name="passwordform" class="my-input" minlength="8" required>
                     <section class="content">
                         {% for message in get_flashed_messages() %}
                           <div class="flash">{{ message }}</div>

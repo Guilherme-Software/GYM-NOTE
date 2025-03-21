@@ -1,4 +1,4 @@
-import functools
+from functools import wraps
 
 from flask import (
     Blueprint, flash, g, redirect, render_template, request, session, url_for
@@ -62,7 +62,7 @@ def login():
         if error is None:
             session.clear()
             session["user_id"] = user["id"]
-            return redirect(url_for("note"))
+            return redirect(url_for("notes"))
         
         flash(error)
 
@@ -72,7 +72,6 @@ def login():
 @bp.before_app_request
 def load_logged_in_user():
     user_id = session.get("user_id")
-
     if user_id is None:
         g.user = None   
     else:
@@ -83,15 +82,17 @@ def load_logged_in_user():
 
 @bp.route("/logout")
 def logout():
-    return redirect(url_for("/auth/login"))
+    session.clear()
+    return redirect(url_for("auth.login"))
 
 
-def login_required(view):
-    @functools.wraps(view)
-    def wrapped_view(**kwargs):
+def login_required(f):
+    @wraps(f)
+    def wrapped(*args, **kwargs):
         if g.user is None:
-            return redirect(url_for("/auth/login"))
+            return redirect(url_for("auth.login"))
+        return f(*args, **kwargs)
+    return wrapped
 
-        return view(**kwargs)
 
-    return wrapped_view
+#FAZER UM SESSION CLEAR DPS

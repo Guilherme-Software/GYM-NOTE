@@ -19,13 +19,10 @@ def create_app(test_config=None):
     except OSError:
         pass
     
+    #go to login page
     @app.route("/")
     def home():
         return redirect(url_for('auth.login'))
-
-    @app.route("/notes", methods=['GET'])
-    def note():
-        return render_template("notes.html")
 
 
     from . import db
@@ -36,6 +33,6 @@ def create_app(test_config=None):
 
     from . import notes
     app.register_blueprint(notes.bp)
-    app.add_url_rule("/note", endpoint='notes')
+    app.add_url_rule("/notes", endpoint='notes')
 
     return app
