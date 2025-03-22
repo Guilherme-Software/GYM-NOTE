@@ -33,6 +33,5 @@ def create_app(test_config=None):
 
     from . import notes
     app.register_blueprint(notes.bp)
-    app.add_url_rule("/notes", endpoint='notes')
 
     return app
