@@ -8,30 +8,31 @@
     
     <body>
 
+        
             <!--Title-->
             <div class="box1">
                 <h1>GYM Notes</h1>
             </div>
 
 
-            <!--Login-->
-        <div class="center">
-            <div class="box2">
-                <form method="post">
-                    <h1>Login</h1>
-                    <input type="email" placeholder="E-mail" name="emailform" class="my-input">
-                    <input type="password" placeholder="Password" name="passwordform" class="my-input" minlength="8" required>
-                    <section class="content">
-                        {% for message in get_flashed_messages() %}
-                          <div class="flash">{{ message }}</div>
-                        {% endfor %}
-                        {% block content %}{% endblock %}
-                    </section>
-                    <input type="submit" value="Login" class="sub">
-                    <p>Don't have an account? <a href="/auth/register">Register</a></p>
-                </form>
+            <!--box with the Login-->
+            <div class="center">
+                <div class="box2">
+                    <form method="post">
+                        <h1>Login</h1>
+                        <input type="email" placeholder="E-mail" name="emailform" class="my-input">
+                        <input type="password" placeholder="Password" name="passwordform" class="my-input" minlength="8" required>
+                        <section class="content">
+                            {% for message in get_flashed_messages() %}
+                            <div class="flash">{{ message }}</div>
+                            {% endfor %}
+                            {% block content %}{% endblock %}
+                        </section>
+                        <input type="submit" value="Login" class="sub">
+                        <p>Don't have an account? <a href="/auth/register">Register</a></p>
+                    </form>
+                </div>
             </div>
-        </div>
 
 
     </body>

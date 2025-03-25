@@ -31,8 +31,8 @@ def create_app(test_config=None):
     from . import auth
     app.register_blueprint(auth.bp)
 
-    from . import wourkouts
-    app.register_blueprint(wourkouts.bp)
+    from . import workouts
+    app.register_blueprint(workouts.bp)
 
     from . import notes
     app.register_blueprint(notes.bp)

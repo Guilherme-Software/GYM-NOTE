@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{url_for('static', filename='styles.css')}}">
+    <title>GYM Notes</title>
+</head>
+<body>
+    
+
+        <!--Title-->
+        <div class="box1">
+            <h1>GYM Notes</h1>
+        </div>  
+        
+
+        <!--week workouts-->
+        <style>
+            .week { margin-bottom: 10px; }
+        </style>
+
+        <section>
+            {% for day in days %}
+            <div class="week">
+                <h2>{{ day }}</h2>
+                <input type="text" placeholder="Workout" name="workout_{{ day.lower() }}" class="title-notes">
+                <button type="submit" class="sub-sel">Submit/Select </button>
+            </div>
+            {% endfor %}
+        </section>
+
+
+</body>
+</html>

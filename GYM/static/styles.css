@@ -69,9 +69,9 @@ html{
 .title-notes{
     width: 200px;
     height: 30px;
+    margin: -20px;
     font-size: 25px;
-    background-color: rgb(26, 3, 158);
-    color: white;
+    color: black;
     border: none;
     outline: none;
     border-bottom: 2px solid black;
@@ -96,15 +96,19 @@ html{
 }
 
 .week{
-    width: 200px;
+    width: 160px;
     height: 500px;
-    background-color: rgb(26, 3, 158);
-    color: white;
-    margin: 40px;
-    padding: 50px;
+    background-color: white;
+    color: black;
+    margin: 12px;
+    margin-top: 20px;
+    padding: 40px;
     border: 4px solid rgb(0, 255, 221);
     font-size: 20px;
     text-align: center;
+    float: left;
+    justify-content: center;
+    align-items: center;
 }
 
 .sub-sel{
@@ -113,5 +117,6 @@ html{
     font-size: 16px;
     background-color: rgb(0, 255, 221);
     color: black;
-    margin: 4px 0px;
+    margin: -20px;
+    margin-top: 390px;
 }
