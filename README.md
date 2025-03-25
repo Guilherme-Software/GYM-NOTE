@@ -11,7 +11,7 @@
 ## Technologies
 
 - **Backend**: Python, Flask
-- **Database**: MySQL
+- **Database**: SQLite
 - **Frontend**: HTML, CSS
 - **Authentication**: Flask-Login
 - **Development environment**: Python 3.x, venv
