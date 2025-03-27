@@ -19,16 +19,24 @@
         <style>
             .week { margin-bottom: 10px; }
         </style>
-
+        <form>
         <section>
             {% for day in days %}
             <div class="week">
                 <h2>{{ day }}</h2>
                 <input type="text" placeholder="Workout" name="workout_{{ day.lower() }}" class="title-notes">
+                <section class="content">
+                    {% for message in get_flashed_messages() %}
+                    <div class="flash">{{ message }}</div>
+                    {% endfor %}
+                    {% block content %}{% endblock %}
+                </section>
                 <button type="submit" class="sub-sel">Submit/Select </button>
             </div>
             {% endfor %}
+                
         </section>
+        </form>
 
 
 </body>

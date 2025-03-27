@@ -1,5 +1,5 @@
 DROP TABLE IF EXISTS user;
-DROP TABLE IF EXISTS notes;
+DROP TABLE IF EXISTS workout;
 
 CREATE TABLE user (
 id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -9,9 +9,13 @@ password TEXT NOT NULL
 );
 
 
-CREATE TABLE notes (
-ID INTEGER PRIMARY KEY AUTOINCREMENT,
-workout TEXT NOT NULL,
-exercise TEXT NOT NULL,
-weight FLOAT NOT NULL
-)
+CREATE TABLE workout (
+id INTEGER PRIMARY KEY AUTOINCREMENT,
+workout_monday TEXT NOT NULL,
+workout_tuesday TEXT NOT NULL,
+workout_wednesday TEXT NOT NULL,
+workout_thursday TEXT NOT NULL,
+workout_friday TEXT NOT NULL,
+workout_saturday TEXT NOT NULL,
+workout_sunday TEXT NOT NULL
+);

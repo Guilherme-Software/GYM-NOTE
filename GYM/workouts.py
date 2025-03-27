@@ -19,4 +19,28 @@ def user_workouts(id):
     ).fetchone()
 
     days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']
+
+    if request.method == ['POST']:
+        for day in days:
+            work = request.form[F'workout_{day.lower()}']
+            db = get_db()
+            error = None
+
+            if not work:
+                error = "Name of the Workout is required"
+
+            if error is None:
+                try:
+                    db.execute(
+                        "iNSERT INTO workout (workout_({ day }) VALUES (?)",
+                        (work,)
+                    )
+                    db.commit()
+                except db.IntegrityError:
+                    error = "something went wrong!"
+                else:
+                    redirect(url_for('notes.user_notes', id=user['id']))
+
+            flash(error)
+
     return render_template("workouts.html", workout=workout, days=days)
