@@ -29,14 +29,23 @@ def register():
         if error is None:
             try:
                 db.execute(
-                    "INSERT INTO user(name, email, password) VALUES (?, ?, ?)",
+                    "INSERT INTO user(name, email, password) VALUES (?, ?, ?);",
                     (name, email, generate_password_hash(password)),
                 )
                 db.commit()
+
             except db.IntegrityError:
                 error = f"E-mail {email} is already registered."
             else:
-                return redirect(url_for("auth.login"))
+                try:
+                    db.execute(
+                    "INSERT INTO workout(email) VALUES (?);",
+                    (email,),
+                )
+                    db.commit()
+                    return redirect(url_for("auth.login"))
+                except Exception as E:
+                    print("something went wrong: {E}")
 
         flash(error)
 

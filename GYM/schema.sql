@@ -11,11 +11,12 @@ password TEXT NOT NULL
 
 CREATE TABLE workout (
 id INTEGER PRIMARY KEY AUTOINCREMENT,
-workout_monday TEXT NOT NULL,
-workout_tuesday TEXT NOT NULL,
-workout_wednesday TEXT NOT NULL,
-workout_thursday TEXT NOT NULL,
-workout_friday TEXT NOT NULL,
-workout_saturday TEXT NOT NULL,
-workout_sunday TEXT NOT NULL
+email TEXT UNIQUE NOT NULL,
+workout_monday TEXT,
+workout_tuesday TEXT,
+workout_wednesday TEXT,
+workout_thursday TEXT,
+workout_friday TEXT,
+workout_saturday TEXT,
+workout_sunday TEXT
 );
