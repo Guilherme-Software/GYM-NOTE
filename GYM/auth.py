@@ -37,15 +37,8 @@ def register():
             except db.IntegrityError:
                 error = f"E-mail {email} is already registered."
             else:
-                try:
-                    db.execute(
-                    "INSERT INTO workout(email) VALUES (?);",
-                    (email,),
-                )
-                    db.commit()
-                    return redirect(url_for("auth.login"))
-                except Exception as E:
-                    print("something went wrong: {E}")
+                return redirect(url_for("auth.login"))
+
 
         flash(error)
 
@@ -102,6 +95,3 @@ def login_required(f):
             return redirect(url_for("auth.login"))
         return f(*args, **kwargs)
     return wrapped
-
-
-#FAZER UM SESSION CLEAR DPS

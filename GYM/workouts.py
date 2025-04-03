@@ -1,5 +1,5 @@
 from flask import (
-    Blueprint, flash, g, request, render_template, url_for, redirect
+    Blueprint, flash, g, request, render_template, url_for, redirect, session
 )
 
 from GYM.auth import login_required
@@ -13,36 +13,45 @@ bp = Blueprint('workouts', __name__)
 def user_workouts(id):
     db = get_db()
     workout = db.execute(
-        'SELECT * FROM user WHERE id = ?', (id,)
+        """SELECT u.id AS user_id, w.*
+            FROM user u
+            JOIN workout w ON u.id = w.id
+            WHERE u.id = ?""",
+        (id,)
     ).fetchone()
 
     days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']
 
     if request.method == 'POST':
         for day in days:
-            work = request.form[F'workout_{day.lower()}']
-            db = get_db()
+            work = request.form[f'workout_{day.lower()}']
             error = None
 
             if not work:
                 error = "Name of the Workout is required"
+            
+            if error is not None:
+                flash(error)
 
-            if error is None:
-                try:
-                    db.execute(
-                        "SELECT id"
-                        "FROM user"
-                        "JOIN workout"
-                        "ON user.id = workout.id"
-                        "iNSERT INTO workout(workout_({ day }) VALUES (?)",
-                        (work,)
+            else:
+                db = get_db()
+                db.execute(
+                    "iNSERT INTO workout (id, workout_monday, workout_tuesday, workout_wednesday, workout_thursday, workout_friday, workout_saturday, workout_sunday)"
+                    "VALUES (?, ?, ?, ?, ?, ?, ?, ?)",
+                (
+                    (id),
+                    request.form.get('workout_monday'),
+                    request.form.get('workout_tuesday'),
+                    request.form.get('workout_wednesday'),
+                    request.form.get('workout_thursday'),
+                    request.form.get('workout_friday'),
+                    request.form.get('workout_saturday'),
+                    request.form.get('workout_sunday')
+                )
                     )
-                    db.commit() 
-                except db.IntegrityError:
-                    error = "something went wrong!"
-                else:
-                    return redirect(url_for('notes.user_notes', id=user['id']))
+                db.commit()
+                return redirect(url_for('notes.user_notes', id=workout["user_id"]))
 
             flash(error)
 
-    return render_template("workouts.html", days=days)
+    return render_template("workouts.html", days=days, workout=workout)
