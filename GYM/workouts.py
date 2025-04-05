@@ -1,5 +1,5 @@
 from flask import (
-    Blueprint, flash, g, request, render_template, url_for, redirect, session
+    Blueprint, flash, request, render_template, url_for, redirect
 )
 
 from GYM.auth import login_required
@@ -7,7 +7,7 @@ from GYM.db import get_db
 
 bp = Blueprint('workouts', __name__)
 
-
+#wokout page
 @bp.route('/workouts/<int:id>', methods=('GET', 'POST'))
 @login_required
 def user_workouts(id):
@@ -20,26 +20,30 @@ def user_workouts(id):
         (id,)
     ).fetchone()
 
+    selected_day = request.form.get('day')
+
     days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']
 
     if request.method == 'POST':
         error = None
 
+        #workout name.
         for day in days:
             value = request.form[f'workout_{day.lower()}']
-            if not value:
+            if value is None:
                 error = "Name of the Workout is required"
                 break
-
+            
         if error:
             flash(error)
 
+        #see if gonna insert or update
         search = db.execute(
             "SELECT * from workout WHERE id = ?",
             (id,)
         ).fetchone()
 
-
+        #insert week workout name.
         if search is None:
             db.execute(
                 "INSERT INTO workout (id, workout_monday, workout_tuesday, workout_wednesday, workout_thursday, workout_friday, workout_saturday, workout_sunday)"
@@ -56,8 +60,9 @@ def user_workouts(id):
             )
                 )
             db.commit()
-            return redirect(url_for('notes.user_notes', id=workout["user_id"]))
-            
+            return redirect(url_for('notes.user_notes', day=selected_day, id=workout["user_id"]))
+        
+        #update week workout name.
         else:
             db.execute(
             """
@@ -83,6 +88,6 @@ def user_workouts(id):
             )
             )
             db.commit()
-        return redirect(url_for('notes.user_notes', id=workout["user_id"]))
+            return redirect(url_for('notes.user_notes', day=selected_day, id=workout["user_id"]))
 
     return render_template("workouts.html", days=days, workout=workout)

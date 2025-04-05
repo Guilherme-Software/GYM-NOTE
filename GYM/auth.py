@@ -10,6 +10,7 @@ from GYM.db import get_db
 bp = Blueprint('auth', __name__, url_prefix='/auth')
 
 
+# Register user Page
 @bp.route("/register", methods=['GET', 'POST'])
 def register():
     if request.method == 'POST':
@@ -19,6 +20,7 @@ def register():
         db = get_db()
         error = None
         
+        # possible errors
         if not name:
             error = "Name is required."
         elif not email:
@@ -26,6 +28,7 @@ def register():
         elif not password:
             error = "Password is required."
 
+        # Insert into db forms of the user.
         if error is None:
             try:
                 db.execute(
@@ -45,6 +48,7 @@ def register():
     return render_template('auth/register.html')
 
 
+# Login user Page.
 @bp.route("/login", methods=("GET", "POST"))
 def login():
     if request.method == "POST":
@@ -55,12 +59,14 @@ def login():
         user = db.execute(
             'SELECT * FROM user WHERE email = ?', (email,)
         ).fetchone()
-
+        
+        # erros
         if user is None:
             error = "Incorrect email."
         elif not check_password_hash(user['password'], password):
             error = "Incorrect password."
 
+        # if error is None Log in user.
         if error is None:
             session.clear()
             session["user_id"] = user["id"]
@@ -82,12 +88,13 @@ def load_logged_in_user():
         ).fetchone()
 
 
+# logout user (not used)
 @bp.route("/logout")
 def logout():
     session.clear()
     return redirect(url_for("auth.login"))
 
-
+# Usser login is required.
 def login_required(f):
     @wraps(f)
     def wrapped(*args, **kwargs):

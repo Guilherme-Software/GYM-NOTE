@@ -19,22 +19,26 @@ def create_app(test_config=None):
     except OSError:
         pass
     
-    #go to login page
+    # go to login page
     @app.route("/")
     def home():
         return redirect(url_for('auth.login'))
 
-
+    # db init
     from . import db
     db.init_app(app)
 
+    # authentication page (login/register)
     from . import auth
     app.register_blueprint(auth.bp)
-
+    
+    # workouts page
     from . import workouts
     app.register_blueprint(workouts.bp)
 
+    # notes page
     from . import notes
     app.register_blueprint(notes.bp)
 
+    #A PP
     return app

@@ -4,7 +4,7 @@ from datetime import datetime
 import click
 from flask import current_app, g
 
-
+# get db
 def get_db():
     if 'db' not in g:
         g.db = sqlite3.connect(
@@ -15,7 +15,7 @@ def get_db():
 
     return g.db
 
-
+# close db
 def close_db(e=None):
     db = g.pop('db', None)
 
@@ -23,6 +23,7 @@ def close_db(e=None):
         db.close()
 
 
+# init db
 def init_db():
     db = get_db()
 
@@ -30,15 +31,11 @@ def init_db():
         db.executescript(f.read().decode('utf8'))
 
 
+# command to create db
 @click.command('init-db')
 def init_db_command():
     init_db()
     click.echo('Initialized the database.')
-
-
-sqlite3.register_converter(
-    "timestamp", lambda v: datetime.fromisoformat(v.decode())
-)
 
 
 def init_app(app):
