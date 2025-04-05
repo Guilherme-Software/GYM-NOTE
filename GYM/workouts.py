@@ -23,35 +23,66 @@ def user_workouts(id):
     days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']
 
     if request.method == 'POST':
+        error = None
+
         for day in days:
-            work = request.form[f'workout_{day.lower()}']
-            error = None
-
-            if not work:
+            value = request.form[f'workout_{day.lower()}']
+            if not value:
                 error = "Name of the Workout is required"
-            
-            if error is not None:
-                flash(error)
+                break
 
-            else:
-                db = get_db()
-                db.execute(
-                    "iNSERT INTO workout (id, workout_monday, workout_tuesday, workout_wednesday, workout_thursday, workout_friday, workout_saturday, workout_sunday)"
-                    "VALUES (?, ?, ?, ?, ?, ?, ?, ?)",
-                (
-                    (id),
-                    request.form.get('workout_monday'),
-                    request.form.get('workout_tuesday'),
-                    request.form.get('workout_wednesday'),
-                    request.form.get('workout_thursday'),
-                    request.form.get('workout_friday'),
-                    request.form.get('workout_saturday'),
-                    request.form.get('workout_sunday')
-                )
-                    )
-                db.commit()
-                return redirect(url_for('notes.user_notes', id=workout["user_id"]))
-
+        if error:
             flash(error)
+
+        search = db.execute(
+            "SELECT * from workout WHERE id = ?",
+            (id,)
+        ).fetchone()
+
+
+        if search is None:
+            db.execute(
+                "INSERT INTO workout (id, workout_monday, workout_tuesday, workout_wednesday, workout_thursday, workout_friday, workout_saturday, workout_sunday)"
+                "VALUES (?, ?, ?, ?, ?, ?, ?, ?)",
+            (
+                (id),
+                request.form.get('workout_monday'),
+                request.form.get('workout_tuesday'),
+                request.form.get('workout_wednesday'),
+                request.form.get('workout_thursday'),
+                request.form.get('workout_friday'),
+                request.form.get('workout_saturday'),
+                request.form.get('workout_sunday')
+            )
+                )
+            db.commit()
+            return redirect(url_for('notes.user_notes', id=workout["user_id"]))
+            
+        else:
+            db.execute(
+            """
+            UPDATE workout
+                SET workout_monday = ?, 
+                workout_tuesday = ?, 
+                workout_wednesday = ?, 
+                workout_thursday = ?, 
+                workout_friday = ?, 
+                workout_saturday = ?, 
+                workout_sunday = ?
+            WHERE id = ?
+            """,
+            (
+                request.form.get('workout_monday'),
+                request.form.get('workout_tuesday'),
+                request.form.get('workout_wednesday'),
+                request.form.get('workout_thursday'),
+                request.form.get('workout_friday'),
+                request.form.get('workout_saturday'),
+                request.form.get('workout_sunday'),
+                id
+            )
+            )
+            db.commit()
+        return redirect(url_for('notes.user_notes', id=workout["user_id"]))
 
     return render_template("workouts.html", days=days, workout=workout)
