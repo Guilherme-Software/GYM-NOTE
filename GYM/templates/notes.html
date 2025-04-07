@@ -15,5 +15,39 @@
         </div>
         
 
+        <!--NOTES-->
+        <form method="post">
+            <section>
+                <div class="center">
+                    <div class="notes-week">
+                        {% for number in numbers %}
+                            {{ number }}.
+                        <input type="text"
+                                placeholder="Exercise"
+                                name="exercise_{{ number }}"
+                                class="exercise-imput">
+
+                        <input type="number" min="0"
+                                placeholder="Sets"
+                                name="sets_{{ number }}"
+                                class="box-imput">
+
+                        <input type="number" min="0" step="0.5"
+                                placeholder="KG"
+                                name="kg_{{ number }}"
+                                class="box-imput">
+
+                        <input type="text"
+                                 placeholder="Notes"
+                                name="notes_{{ number }}"
+                                class="notes-imput">
+
+                        {% endfor %}
+                        <button type="submit" class="sub-notes">Submit</button>
+                    </div>
+                </div>
+            </section>
+           
+        </form>
 </body>
 </html>

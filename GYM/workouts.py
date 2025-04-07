@@ -34,8 +34,8 @@ def user_workouts(id):
                 error = "Name of the Workout is required"
                 break
             
-        if error:
-            flash(error)
+            if error:
+                flash(error)
 
         #see if gonna insert or update
         search = db.execute(
