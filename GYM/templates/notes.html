@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GYM Notes</title>
+    <link rel="stylesheet" href="{{url_for('static', filename='styles.css')}}">
+</head>
+<body>
+
+    
+        <!--Title-->
+        <div class="box1">
+            <h1>GYM Notes</h1>
+        </div>
+        
+        <div class="center">
+        <H2>Put all your workout here bellow and click in the Save button, don't worry if its not 10 exercises.</H2>
+        </div>
+
+        <!--NOTES-->
+        <form method="post">
+            <section>
+                <div class="center">
+                    {% for number in numbers %}
+                    <div class="notes-exercise">
+                        {{ number }}.
+                        <input type="text"
+                                placeholder="Exercise"
+                                name="exercise_{{ number }}"
+                                class="exercise-imput">
+
+                        Sets:
+                        <input type="number" min="0"
+                                name="sets_{{ number }}"
+                                class="box-imput">
+
+                        KG:
+                        <input type="number" min="0" step="0.5"
+                                name="kg_{{ number }}"
+                                class="box-imput">
+
+                        <input type="text"
+                                 placeholder="Notes"
+                                name="notes_{{ number }}"
+                                class="notes-imput">
+                        </div>
+                        {% endfor %}
+                        <button type="submit" class="sub-notes">Save</button>
+                   
+                </div>
+            </section>
+           
+        </form>
+</body>
+</html>
