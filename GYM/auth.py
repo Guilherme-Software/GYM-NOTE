@@ -17,16 +17,22 @@ def register():
         name = request.form["nameform"]
         email = request.form["emailform"]
         password = request.form["passwordform"]
+        confirm = request.form["confirmform"]
         db = get_db()
         error = None
         
         # possible errors
         if not name:
             error = "Name is required."
+            
         elif not email:
             error = "E-mail is required."
+
         elif not password:
             error = "Password is required."
+
+        elif confirm != password:
+            error = "Passwords isn't the same."
 
         # Insert into db forms of the user.
         if error is None:

@@ -8,7 +8,6 @@ email TEXT UNIQUE NOT NULL,
 password TEXT NOT NULL
 );
 
-
 CREATE TABLE workout (
 id INTEGER,
 workout_monday TEXT,

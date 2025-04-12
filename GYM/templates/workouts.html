@@ -20,25 +20,25 @@
             .week { margin-bottom: 10px; }
         </style>
         <form method="post">
-        <section>
-            {% for day in days %}
-            <div class="week">
-                <h2>{{ day }}</h2>
-                <input type="text" 
-                placeholder="Workout" 
-                name="workout_{{ day.lower() }}" 
-                class="title-workouts"
-                value="{{ workout['workout_' + day.lower()] if workout else '' }}"
-                >
-                <section class="content">
-                    {% for message in get_flashed_messages() %}
-                    {{ message }}
-                    {% endfor %}
-                </section>
-                <button type="submit" name="day" value="{{ day.lower() }}" class="sub-sel">Submit/Select </button>
-            </div>
-            {% endfor %}
-        </section>
+            <section>
+                {% for day in days %}
+                <div class="week">
+                    <h2>{{ day }}</h2>
+                    <input type="text" 
+                    placeholder="Workout" 
+                    name="workout_{{ day.lower() }}" 
+                    class="title-workouts"
+                    value="{{ workout['workout_' + day.lower()] if workout else '' }}"
+                    >
+                    <section class="content">
+                        {% for message in get_flashed_messages() %}
+                        {{ message }}
+                        {% endfor %}
+                    </section>
+                    <button type="submit" name="day" value="{{ day.lower() }}" class="sub-sel">Submit/Select </button>
+                </div>
+                {% endfor %}
+            </section>
         </form>
 
 
