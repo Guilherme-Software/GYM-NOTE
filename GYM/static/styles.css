@@ -151,3 +151,9 @@ html{
     background-color: rgb(0, 255, 221);
     color: black;
 }
+
+.error{
+    text-align: center;
+    font-size: 25px;
+    color: red;
+}

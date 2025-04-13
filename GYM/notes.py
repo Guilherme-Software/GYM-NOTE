@@ -14,7 +14,10 @@ bp = Blueprint('notes', __name__)
 def user_notes(day, id):
     db = get_db()
     note = db.execute(
-        'SELECT * FROM user WHERE id = ?',
+            """SELECT u.id AS user_id, n.*
+            FROM user u
+            JOIN notes n ON u.id = n.user_id
+            WHERE u.id = ?""",
         (id,)
     ).fetchone()
 
@@ -24,15 +27,26 @@ def user_notes(day, id):
         error = None
         
         for number in numbers:
-            x = [f"exercise_{number}"]
-            y = [f"kg_{number}"]
-            z = [f"notes_{number}"]
+            a = [f"exercise_{number}"]
+            b = [f"sets_{number}"]
+            c = [f"kg_{number}"]
+            d = [f"notes_{number}"]
+            value = (a, b, c, d)
+            if value is None:
+                error = f"Name of the {a, b, c, d} is required to continue."
+                break
+            
+            if error:
+                flash(error)
 
-        #see if gonna insert or update
-        search = db.execute(
-            "SELECT * from notes WHERE id = ?",
-            (id,)
-        ).fetchone()
+            else:
+            #see if gonna insert or update
+                search = db.execute(
+                    "SELECT * from notes WHERE user_id = ?",
+                    (id,)
+                ).fetchone()
+
+            
 
         
 
