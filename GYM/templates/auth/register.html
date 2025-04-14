@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -36,4 +37,44 @@
 
 
 </body>
+=======
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{url_for('static', filename='styles.css')}}">
+    <title>GYM Notes</title>
+</head>
+<body>
+
+
+        <!--Title-->
+        <div class="box1">
+            <h1>GYM Notes</h1>
+        </div>
+
+        <!--box with the register-->
+        <div class="center">
+            <div class="box2">
+                <form method="POST"> 
+                    <h1>Register</h1>
+                    <input type="text" placeholder="Name" name="nameform" class="my-input">
+                    <input type="email" placeholder="E-mail" name="emailform" class="my-input">
+                    <input type="password" placeholder="Password" name="passwordform" class="my-input" minlength="8" required>
+                    <input type="password" placeholder="Confirm Password" name="confirmform" class="my-input" minlength="8" required>
+                    <section class="content">
+                        {% for message in get_flashed_messages() %}
+                          <div class="flash">{{ message }}</div>
+                        {% endfor %}
+                        {% block content %}{% endblock %}
+                    </section>
+                    <input type="submit" value="Register" class="sub">
+                </form>
+            </div>
+        </div>
+
+
+</body>
+>>>>>>> 43d1475e80626c81c539e548dce0b0f7a9df358c
 </html>

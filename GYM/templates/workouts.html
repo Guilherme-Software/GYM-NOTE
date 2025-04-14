@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -44,4 +45,51 @@
 
 
 </body>
+=======
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{url_for('static', filename='styles.css')}}">
+    <title>GYM Notes</title>
+</head>
+<body>
+    
+
+        <!--Title-->
+        <div class="box1">
+            <h1>GYM Notes</h1>
+        </div>  
+        
+
+        <!--week workouts-->
+        <style>
+            .week { margin-bottom: 10px; }
+        </style>
+        <form method="post">
+            <section>
+                {% for day in days %}
+                <div class="week">
+                    <h2>{{ day }}</h2>
+                    <input type="text" 
+                    placeholder="Workout" 
+                    name="workout_{{ day.lower() }}" 
+                    class="title-workouts"
+                    value="{{ workout['workout_' + day.lower()] if workout else '' }}"
+                    >
+                    <section class="content">
+                        {% for message in get_flashed_messages() %}
+                        {{ message }}
+                        {% endfor %}
+                    </section>
+                    <button type="submit" name="day" value="{{ day.lower() }}" class="sub-sel">Submit/Select </button>
+                </div>
+                {% endfor %}
+            </section>
+        </form>
+
+
+</body>
+>>>>>>> 43d1475e80626c81c539e548dce0b0f7a9df358c
 </html>
