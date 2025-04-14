@@ -27,6 +27,7 @@ def user_notes(day, id):
     if request.method == "POST":
         error = None
         
+        #errors
         for number in numbers:
             a = [f"exercise_{number}"]
             b = [f"sets_{number}"]
