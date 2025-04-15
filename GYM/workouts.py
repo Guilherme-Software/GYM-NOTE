@@ -29,6 +29,15 @@ def user_workouts(id):
 
         #workout name.
         for day in days:
+
+            workout_monday = request.form.get('workout_monday')
+            workout_tuesday = request.form.get('workout_tuesday')
+            workout_wednesday = request.form.get('workout_wednesday')
+            workout_thursday = request.form.get('workout_thursday')
+            workout_friday = request.form.get('workout_friday')
+            workout_saturday = request.form.get('workout_saturday')
+            workout_sunday = request.form.get('workout_sunday')
+
             value = request.form[f'workout_{day.lower()}']
             if value == "":
                 error = f"Name of the Workout {day} is required to continue."
@@ -49,17 +58,15 @@ def user_workouts(id):
             db.execute(
                 "INSERT INTO workout (user_id, workout_monday, workout_tuesday, workout_wednesday, workout_thursday, workout_friday, workout_saturday, workout_sunday)"
                 "VALUES (?, ?, ?, ?, ?, ?, ?, ?)",
-            (
-                (id),
-                request.form.get('workout_monday'),
-                request.form.get('workout_tuesday'),
-                request.form.get('workout_wednesday'),
-                request.form.get('workout_thursday'),
-                request.form.get('workout_friday'),
-                request.form.get('workout_saturday'),
-                request.form.get('workout_sunday')
+                (id, 
+                 workout_monday, 
+                 workout_tuesday, 
+                 workout_wednesday, 
+                 workout_thursday, 
+                 workout_friday, 
+                 workout_saturday, 
+                 workout_sunday)
             )
-                )
             db.commit()
         
 
@@ -77,16 +84,14 @@ def user_workouts(id):
                 workout_sunday = ?
             WHERE user_id = ?
             """,
-            (
-                request.form.get('workout_monday'),
-                request.form.get('workout_tuesday'),
-                request.form.get('workout_wednesday'),
-                request.form.get('workout_thursday'),
-                request.form.get('workout_friday'),
-                request.form.get('workout_saturday'),
-                request.form.get('workout_sunday'),
-                id
-            )
+                (workout_monday, 
+                 workout_tuesday, 
+                 workout_wednesday, 
+                 workout_thursday, 
+                 workout_friday, 
+                 workout_saturday, 
+                 workout_sunday,
+                 id)
             )
             db.commit()
             

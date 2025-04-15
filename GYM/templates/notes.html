@@ -18,6 +18,12 @@
         <H2>Put all your workout here bellow and click in the Save button, don't worry if its not 10 exercises.</H2>
         </div>
 
+        <section class="error">
+            {% for message in get_flashed_messages() %}
+            {{ message }}
+            {% endfor %}
+        </section>  
+
         <!--NOTES-->
         <form method="post">
             <section>
