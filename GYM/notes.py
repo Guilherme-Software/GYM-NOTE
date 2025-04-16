@@ -24,7 +24,7 @@ def user_notes(day, id):
     numbers = range(1, 11)
 
     if request.method == "POST":
-    
+
         error = None
         
         #errors
@@ -33,43 +33,18 @@ def user_notes(day, id):
             exercise = request.form.get(f"exercise_{number}")
             sets = request.form.get(f"sets_{number}")
             kg = request.form.get(f"kg_{number}")
-            notes = request.form.get(f"notes_{number}")
+            notes_text = request.form.get(f"notes_{number}")
 
             if not exercise:
-                error = f"Name of the {exercise} is required to continue."
-                break
+                continue
             
-            if error:
-                flash(error)
-
-            else:
-            #see if gonna insert or update
-                search = db.execute(
-                    "SELECT * from notes WHERE user_id = ?",
-                    (id,)
-                ).fetchone()
-
-                if search is None:
-                    db.execute(
-                        "INSERT INTO notes (user_id, exercise, sets, kg, notes)"
-                        "VALUES( ?, ?, ?, ?, ?)",
-                        (id, exercise, sets, kg, notes)
-                    )
-                    db.commit()
-
-                else:
-                    db.execute(
-                        """
-                        UPDATE notes
-                            SET exercise = ?,
-                            sets = ?,
-                            kg = ?,
-                            notes = ?
-                        WHERE user_id = ?
-                        """,
-                        (exercise, sets, kg, notes, id)
-                    )
-                    db.commit()
+            db.execute(
+                "INSERT INTO notes (user_id, day, exercise, sets, kg, notes) "
+                "VALUES(?, ?, ?, ?, ?, ?)", 
+                (id, day, exercise, sets, kg, notes_text)
+            )
+            db.commit()
 
 
-    return render_template("notes.html", note=note, numbers=numbers)
+
+    return render_template("notes.html", note=note, numbers=numbers, day=day)

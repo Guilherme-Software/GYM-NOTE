@@ -24,12 +24,11 @@ CREATE TABLE workout (
 
 CREATE TABLE notes (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
-    workout_id INTEGER,
+    day TEXT,
     user_id INTEGER,
     exercise TEXT,
     sets INTEGER,
     kg INTEGER,
     notes TEXT,
-    FOREIGN KEY (user_id) REFERENCES user(id),
-    FOREIGN KEY (workout_id) REFERENCES workout(id)
+    FOREIGN KEY (user_id) REFERENCES user(id)
 )
