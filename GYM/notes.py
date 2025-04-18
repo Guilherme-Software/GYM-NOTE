@@ -1,5 +1,5 @@
 from flask import (
-    Blueprint, flash, request, render_template, redirect, url_for
+    Blueprint, flash, request, render_template, redirect, url_for, g
 )
 from GYM.auth import login_required
 from GYM.db import get_db
@@ -24,6 +24,14 @@ def user_notes(day, id):
     note_dict = {note['position']: note for note in note}
 
     numbers = range(1, 11)
+
+    days_allowed = ('monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday')
+
+    if day not in days_allowed:
+        return redirect(url_for('auth.login'))
+
+    if id != g.user["id"]:
+        return redirect(url_for('auth.login'))
 
     if request.method == "POST":
         error = None

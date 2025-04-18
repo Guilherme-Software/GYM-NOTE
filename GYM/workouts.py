@@ -1,5 +1,5 @@
 from flask import (
-    Blueprint, flash, request, render_template, url_for, redirect
+    Blueprint, flash, request, render_template, url_for, redirect, g
 )
 
 from GYM.auth import login_required
@@ -24,6 +24,9 @@ def user_workouts(id):
 
     days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']
 
+    if id != g.user["id"]:
+        return redirect(url_for('auth.login'))
+
     if request.method == 'POST':
         error = None
 
@@ -38,20 +41,11 @@ def user_workouts(id):
             workout_saturday = request.form.get('workout_saturday')
             workout_sunday = request.form.get('workout_sunday')
 
-            value = request.form[f'workout_{day.lower()}']
-            if value == "":
-                error = f"Name of the Workout {day} is required to continue."
-                break
-            
-            if error:
-                flash(error)
-
             #see if gonna insert or update
-            else:
-                search = db.execute(
-                    "SELECT * from workout WHERE user_id = ?",
-                    (id,)
-                ).fetchone()
+            search = db.execute(
+                "SELECT * from workout WHERE user_id = ?",
+                (id,)
+            ).fetchone()
 
         #insert week workout name.
         if search is None:
@@ -100,7 +94,7 @@ def user_workouts(id):
             flash(error)
 
         else:
-            return redirect(url_for('notes.user_notes', day=selected_day, id=workout["user_id"]))
+            return redirect(url_for('notes.user_notes', day=selected_day, id=id))
 
 
     return render_template("workouts.html", days=days, workout=workout)
