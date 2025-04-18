@@ -1,5 +1,5 @@
 from flask import (
-    Blueprint, flash, request, render_template, redirect, url_for, g
+    Blueprint, flash, request, render_template, redirect, url_for, g, Response
 )
 from GYM.auth import login_required
 from GYM.db import get_db
@@ -77,6 +77,8 @@ def user_notes(day, id):
             flash(error)
         
         else:
-            redirect(url_for('notes.user_notes', day=day, id=id))
+            response = redirect(url_for('notes.user_notes', day=day, id=id))
+            response.cache_control.no_cache = True
+            return response
 
     return render_template("notes.html", note_dict=note_dict, numbers=numbers, day=day)
