@@ -80,7 +80,7 @@ def login():
         
         flash(error)
 
-    return render_template("/auth/login.html")
+    return render_template("/auth/index.html")
 
 
 @bp.before_app_request
