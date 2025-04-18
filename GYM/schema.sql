@@ -25,6 +25,7 @@ CREATE TABLE workout (
 CREATE TABLE notes (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     day TEXT,
+    position INTEGER,
     user_id INTEGER,
     exercise TEXT,
     sets INTEGER,

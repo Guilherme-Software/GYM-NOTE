@@ -114,7 +114,7 @@ html{
     font-size: 25px;
 }
 
-.exercise-imput{
+.exercise-input{
     width: 250px;
     height: 25px;
     font-size: 20px;
@@ -125,7 +125,7 @@ html{
     border-bottom: 2px solid black;
 }
 
-.box-imput{
+.box-input{
     width: 75px;
     height: 25px;
     font-size: 20px;
@@ -136,7 +136,7 @@ html{
     border-bottom: 2px solid black;
 }
 
-.notes-imput{
+.notes-input{
     width: 570px;
     height: 30px;
     font-size: 20px;

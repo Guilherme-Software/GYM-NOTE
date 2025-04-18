@@ -4,59 +4,60 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>GYM Notes</title>
-    <link rel="stylesheet" href="{{url_for('static', filename='styles.css')}}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
 </head>
 <body>
-
+    <!--Title-->
+    <div class="box1">
+        <h1>GYM Notes</h1>
+    </div>
     
-        <!--Title-->
-        <div class="box1">
-            <h1>GYM Notes</h1>
-        </div>
-        
-        <div class="center">
-        <h2>Put all your workout here bellow and click in the Save button, don't worry if its not 10 exercises.</h2>
-        </div>
+    <div class="center">
+        <h2>Put all your workout here below and click the Save button. Don't worry if it's not 10 exercises. Reload the page after put all to see your workout!</h2>
+    </div>
 
-        <section class="error">
-            {% for message in get_flashed_messages() %}
-            {{ message }}
-            {% endfor %}
-        </section>  
+    <!--Error messages-->
+    <section class="error">
+        {% for message in get_flashed_messages() %}
+        {{ message }}
+        {% endfor %}
+    </section>  
 
-        <!--NOTES-->
-        <form method="post">
-            <section>
-                <div class="center">
-                    {% for number in numbers %}
-                    <div class="notes-exercise">
-                        {{ number }}.
-                        <input type="text"
-                                placeholder="Exercise"
-                                name="exercise_{{ number }}"
-                                class="exercise-imput">
+    <!--NOTES-->
+    <form method="post">
+        <section>
+            <div class="center">
+                {% for number in numbers %}
+                <div class="notes-exercise">
+                    {{ number }}.
+                    <input type="text"
+                        placeholder="Exercise"
+                        name="exercise_{{ number }}"
+                        class="exercise-input"
+                        value="{{ note_dict[number].exercise if number in note_dict else '' }}">
 
-                        Sets:
-                        <input type="number" min="0"
-                                name="sets_{{ number }}"
-                                class="box-imput">
+                    Sets:
+                    <input type="number" min="0"
+                        name="sets_{{ number }}"
+                        class="box-input"
+                        value="{{ note_dict[number].sets if number in note_dict else '' }}">
 
-                        KG:
-                        <input type="number" min="0" step="0.5"
-                                name="kg_{{ number }}"
-                                class="box-imput">
+                    KG:
+                    <input type="number" min="0" step="0.5"
+                        name="kg_{{ number }}"
+                        class="box-input"
+                        value="{{ note_dict[number].kg if number in note_dict else '' }}">
 
-                        <input type="text"
-                                 placeholder="Notes"
-                                name="notes_{{ number }}"
-                                class="notes-imput">
-                        </div>
-                        {% endfor %}
-                        <button type="submit" class="sub-notes">Save</button>
-                   
+                    <input type="text"
+                        placeholder="Notes"
+                        name="notes_{{ number }}"
+                        class="notes-input"
+                        value="{{ note_dict[number].notes if number in note_dict else '' }}">
                 </div>
-            </section>
-           
-        </form>
+                {% endfor %}
+                <button type="submit" class="sub-notes" name="save">Save</button>
+            </div>
+        </section>
+    </form>
 </body>
 </html>

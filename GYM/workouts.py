@@ -46,7 +46,7 @@ def user_workouts(id):
             if error:
                 flash(error)
 
-        #see if gonna insert or update
+            #see if gonna insert or update
             else:
                 search = db.execute(
                     "SELECT * from workout WHERE user_id = ?",

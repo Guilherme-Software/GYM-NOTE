@@ -1,50 +1,74 @@
 from flask import (
-    Blueprint, flash, g, request, render_template, url_for, redirect
+    Blueprint, flash, request, render_template, redirect, url_for
 )
-from werkzeug.exceptions import abort
 from GYM.auth import login_required
 from GYM.db import get_db
-from markupsafe import escape
 
 bp = Blueprint('notes', __name__)
-
 
 @bp.route('/notes/<day>/<int:id>', methods=('GET', 'POST'))
 @login_required
 def user_notes(day, id):
     db = get_db()
+    
+    # Get all notes for the user on the specified day
     note = db.execute(
-            """SELECT u.id AS user_id, n.*
-            FROM user u
-            JOIN notes n ON u.id = n.user_id
-            WHERE u.id = ?""",
-        (id,)
-    ).fetchone()
+        """SELECT u.id AS user_id, n.*
+        FROM user u
+        JOIN notes n ON u.id = n.user_id
+        WHERE u.id = ? AND n.day = ?""",
+        (id, day)
+    ).fetchall()
+
+    # Organize notes in a dictionary by position
+    note_dict = {note['position']: note for note in note}
 
     numbers = range(1, 11)
 
     if request.method == "POST":
-
         error = None
         
-        #errors
+        # Iterate through numbers 1-10 to check and save the workout details
         for number in numbers:
-
             exercise = request.form.get(f"exercise_{number}")
             sets = request.form.get(f"sets_{number}")
             kg = request.form.get(f"kg_{number}")
             notes_text = request.form.get(f"notes_{number}")
 
-            if not exercise:
-                continue
-            
-            db.execute(
-                "INSERT INTO notes (user_id, day, exercise, sets, kg, notes) "
-                "VALUES(?, ?, ?, ?, ?, ?)", 
-                (id, day, exercise, sets, kg, notes_text)
-            )
+            # Check if there is an existing note for this exercise
+            existing_note = db.execute(
+                "SELECT * FROM notes WHERE user_id = ? AND day = ? AND position = ?",
+                (id, day, number)
+            ).fetchone()
+
+            # If the note doesn't exist, insert it
+            if existing_note is None:
+                db.execute(
+                    "INSERT INTO notes (user_id, day, position, exercise, sets, kg, notes) "
+                    "VALUES (?, ?, ?, ?, ?, ?, ?)", 
+                    (id, day, number, exercise, sets, kg, notes_text)
+                )
+
+            # If the note exists, update it
+            else:
+                db.execute(
+                    """
+                    UPDATE notes
+                    SET exercise = ?, 
+                    sets = ?, 
+                    kg = ?, 
+                    notes = ?
+                    WHERE user_id = ? AND day = ? AND position = ?
+                    """,
+                    (exercise, sets, kg, notes_text, id, day, number)
+                )
             db.commit()
 
+        # If there is an error, flash the message
+        if error is not None:
+            flash(error)
+        
+        else:
+            redirect(url_for('notes.user_notes', day=day, id=id))
 
-
-    return render_template("notes.html", note=note, numbers=numbers, day=day)
+    return render_template("notes.html", note_dict=note_dict, numbers=numbers, day=day)
