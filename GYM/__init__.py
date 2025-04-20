@@ -40,5 +40,5 @@ def create_app(test_config=None):
     from . import notes
     app.register_blueprint(notes.bp)
 
-    #A PP
+    # APP
     return app
