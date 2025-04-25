@@ -43,7 +43,7 @@ def user_workouts(id):
 
             #see if gonna insert or update
             search = db.execute(
-                "SELECT * from workout WHERE user_id = ?",
+                "SELECT * FROM workout WHERE user_id = ?",
                 (id,)
             ).fetchone()
 

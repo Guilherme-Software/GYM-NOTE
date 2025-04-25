@@ -23,15 +23,17 @@ def user_notes(day, id):
     # Organize notes in a dictionary by position
     note_dict = {note['position']: note for note in note}
 
+    # variable names
     numbers = range(1, 11)
-
     days_allowed = ('monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday')
 
+    # If the user tries to manipulate the url.
     if day not in days_allowed:
         return redirect(url_for('auth.login'))
 
-    if id != g.user["id"]:
+    elif id != g.user["id"]:
         return redirect(url_for('auth.login'))
+
 
     if request.method == "POST":
         error = None
