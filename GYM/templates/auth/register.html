@@ -1,18 +1,6 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="{{url_for('static', filename='styles.css')}}">
-    <title>GYM Notes</title>
-</head>
-<body>
+{% extends 'base.html' %}
 
-
-        <!--Title-->
-        <div class="box1">
-            <h1>GYM Notes</h1>
-        </div>
+{% block content %}
 
         <!--box with the register-->
         <div class="center">
@@ -27,12 +15,10 @@
                         {% for message in get_flashed_messages() %}
                           <div class="flash">{{ message }}</div>
                         {% endfor %}
-                        {% block content %}{% endblock %}
                     </section>
                     <input type="submit" value="Register" class="sub">
                 </form>
             </div>
         </div>
 
-
-</body>
+{% endblock %}
