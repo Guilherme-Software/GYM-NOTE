@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GYM Notes</title>
+    <link rel="stylesheet" href="{{url_for('static', filename='styles.css')}}">
+</head>
+
+
+<body>
+
+    <header>
+        <!--Title-->
+        <div class="box1">
+            <h1>GYM Notes</h1>
+        </div>
+    </header>
+
+    {% block content %}
+    {% endblock %}
+
+    <footer>
+        <div class="flex">
+            <div class="footer">
+                <a href="https://github.com/Guilherme-Software"><img src="{{ url_for('static', filename='images/github_logo_icon_229278.webp') }}" alt="GitHub" class="icon"></a>
+                <a href="https://www.linkedin.com/in/guilherme-software/"><img src="{{ url_for('static', filename='images/3228550_app_b_w_linkedin_logo_media_icon.svg')  }}" alt="Linkedln" class="icon"></a>
+                <br>
+                <span style="font-size: 15px;">&copy; 2025 Designed by Guilherme dos Santos Lima.</span>
+            </div>
+        </div>
+    </footer>
+
+</body>
+</html>

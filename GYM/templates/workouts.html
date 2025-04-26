@@ -1,19 +1,7 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="{{url_for('static', filename='styles.css')}}">
-    <title>GYM Notes</title>
-</head>
-<body>
-    
+{% extends 'base.html' %}
 
-        <!--Title-->
-        <div class="box1">
-            <h1>GYM Notes</h1>
-        </div>  
-        
+{% block content %}
+
         <section class="error">
             {% for message in get_flashed_messages() %}
             {{ message }}
@@ -21,9 +9,6 @@
         </section>  
         
         <!--week workouts-->
-        <style>
-            .week { margin-bottom: 10px; }
-        </style>
         <form method="post">
             <section>
                 {% for day in days %}
@@ -42,5 +27,4 @@
             </section>
         </form>
 
-
-</body>
+{% endblock %}

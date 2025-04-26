@@ -1,17 +1,7 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GYM Notes</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
-</head>
-<body>
-    <!--Title-->
-    <div class="box1">
-        <h1>GYM Notes</h1>
-    </div>
-    
+{% extends 'base.html' %}
+
+{% block content %}
+
     <div class="center">
         <h2>Add all your exercises below and click the 'Save' button. Don't worry if it's not exactly 10 exercises.</h2>
     </div>
@@ -59,5 +49,5 @@
             </div>
         </section>
     </form>
-</body>
-</html>
+    
+{% endblock %}
