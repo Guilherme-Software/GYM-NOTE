@@ -74,7 +74,7 @@ def user_notes(day, id):
                 )
             db.commit()
 
-        # If there is an error, flash the message
+        # If there is an error, flash the message.
         if error is not None:
             flash(error)
         
