@@ -1,17 +1,20 @@
-import sqlite3
+import pymysql.cursors
 
 import click
 from flask import current_app, g
+import pymysql.cursors
 
 # get db
 def get_db():
     if 'db' not in g:
-        g.db = sqlite3.connect(
-            current_app.config['DATABASE'],
-            detect_types=sqlite3.PARSE_DECLTYPES
+        g.db = pymysql.connect(
+            host = current_app.config['DB_HOST'],
+            user = current_app.config['DB_USER'],
+            password = current_app.config['DB_PASSWORD'],
+            database = current_app.config['DB_NAME'],
+            port = current_app.config['DB_PORT'],
+            cursorclass=pymysql.cursors.DictCursor
         )
-        g.db.row_factory = sqlite3.Row
-
     return g.db
 
 # close db
@@ -25,9 +28,13 @@ def close_db(e=None):
 # init db
 def init_db():
     db = get_db()
-
-    with current_app.open_resource('schema.sql') as f:
-        db.executescript(f.read().decode('utf8'))
+    with db.cursor() as cursor:
+        with current_app.open_resource('schema.sql') as f:
+            sql_commands = f.read().decode('utf8')
+            for command in sql_commands.split(';'):
+                command = command.strip()
+                if command:
+                    cursor.execute(command)
 
 
 # command to create db
