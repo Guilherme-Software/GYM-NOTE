@@ -5,13 +5,12 @@
 ## Features
 
 - **User registration and login**: Implement user authentication for registration and login.
-- **Workout log**: Users can add, edit, and view their workouts. (in production)
+- **Workout log**: Users can add, edit, and view their workouts.
 - **Clean and simple interface**: Design focused on usability.
 
 ## Technologies
 
-- **Backend**: Python, Flask
-- **Database**: SQLite
-- **Frontend**: HTML, CSS
-- **Authentication**: Flask-Login
-- **Development environment**: Python 3.x, venv
+- **Python**
+- **Flask**
+- **SQLite**
+- **HTML and CSS**
