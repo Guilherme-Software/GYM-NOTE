@@ -29,21 +29,21 @@
 
 ![Captura de tela 2025-04-25 072238](https://github.com/user-attachments/assets/e26f04ba-dd62-480e-b203-def2425819b1)
 
-##How To Use:
+## How To Use:
 
-1. Clone the GitHub Repository using:
+**1. Clone the GitHub Repository using:**
 
 ```
 git clone https://github.com/Guilherme-Software/GYM-Notes.git
 ```
 
-2. Install the requirements.txt using command:
+**2. Install the requirements.txt using command:**
 
 ```
 pip install -r requirements.txt
 ```
 
-3. Use the command:
+**3. Use the command:**
 
 ```
 Flask --app GYM run
