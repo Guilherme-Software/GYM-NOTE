@@ -19,12 +19,12 @@ def create_app(test_config=None):
     except OSError:
         pass
     
-    with app.app_context():
-        try:
-            from .db import init_db
-            init_db()
-        except Exception as e:
-            print("Error initizaling the db.")
+    #with app.app_context():
+        #try:
+            #from .db import init_db
+            #init_db()
+        #except Exception as e:
+            #print("Error initizaling the db.")
 
     # go to login page
     @app.route("/")
